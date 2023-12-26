@@ -9,6 +9,7 @@ const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET
 
 if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
+  console.error("Missing env variables for GitHub OAuth")
   throw new Error("Missing env variables for GitHub OAuth")
 }
 
@@ -18,6 +19,7 @@ export const {
   signOut,
   signIn,
 } = NextAuth({
+  trustHost: true,
   adapter: PrismaAdapter(db),
   providers: [
     Github({
