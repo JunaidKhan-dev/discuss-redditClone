@@ -1,6 +1,5 @@
 import Link from "next/link"
 
-import { auth } from "@/auth"
 import {
   Input,
   Navbar,
@@ -9,10 +8,11 @@ import {
   NavbarItem,
 } from "@nextui-org/react"
 
-const Header = async () => {
-  const session = await auth()
+import HeaderAuth from "./HeaderAuth"
+
+const Header = () => {
   return (
-    <Navbar className="shadow mb-6">
+    <Navbar className="shadow mb-6 border border-rose-200">
       <NavbarBrand>
         <Link href="/" className="font-bold">
           Discuss
@@ -23,10 +23,8 @@ const Header = async () => {
           <Input placeholder="Search" />
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent>
-        <NavbarItem>
-          {session?.user ? <div>SignedIn</div> : <div>SignedOUt</div>}
-        </NavbarItem>
+      <NavbarContent justify="end">
+        <HeaderAuth />
       </NavbarContent>
     </Navbar>
   )
