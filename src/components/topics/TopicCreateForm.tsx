@@ -11,12 +11,15 @@ import {
   Textarea,
 } from "@nextui-org/react"
 
+import FormButton from "../common/FormButton"
+
 function TopicCreateForm() {
   const [formState, action] = useFormState(actions.createTopic, {
     errors: {},
   })
+
   return (
-    <Popover placement="left">
+    <Popover placement="left" className="">
       <PopoverTrigger>
         <Button color="primary">Create a Topic</Button>
       </PopoverTrigger>
@@ -29,16 +32,24 @@ function TopicCreateForm() {
               label="Name"
               name="name"
               labelPlacement="outside"
+              isInvalid={!!formState.errors.name}
+              errorMessage={formState.errors.name?.join(", ")}
             />
+
             <Textarea
               label="Description"
               name="description"
               labelPlacement="outside"
               placeholder="Describe your topic"
+              isInvalid={!!formState.errors.description}
+              errorMessage={formState.errors.description?.join(", ")}
             />
-            <Button type="submit" color="primary">
-              Create
-            </Button>
+            {formState.errors._form && (
+              <div className="p-2 bg-red-200 border border-red-400 rounded">
+                {formState.errors._form.join(", ")}
+              </div>
+            )}
+            <FormButton>Create</FormButton>
           </div>
         </form>
       </PopoverContent>
